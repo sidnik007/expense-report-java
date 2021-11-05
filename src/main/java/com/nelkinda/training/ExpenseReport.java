@@ -10,6 +10,11 @@ enum ExpenseType {
 class Expense {
     ExpenseType type;
     int amount;
+
+    public Expense(ExpenseType type, int amount) {
+        this.type = type;
+        this.amount = amount;
+    }
 }
 
 public class ExpenseReport {
