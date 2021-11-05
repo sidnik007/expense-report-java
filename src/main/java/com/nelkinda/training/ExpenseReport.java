@@ -50,16 +50,14 @@ public class ExpenseReport {
 
         System.out.println("Expenses " + date);
 
-        int mealExpenses = sumMeal(expenses);
         for (Expense expense : expenses) {
             String expenseName = expense.getName();
             String mealOverExpensesMarker = expense.isOverMarker() ? "X" : " ";
             System.out.println(expenseName + "\t" + expense.amount + "\t" + mealOverExpensesMarker);
         }
-        int total = sumTotal(expenses);
 
-        System.out.println("Meal expenses: " + mealExpenses);
-        System.out.println("Total expenses: " + total);
+        System.out.println("Meal expenses: " + sumMeal(expenses));
+        System.out.println("Total expenses: " + sumTotal(expenses));
     }
 
     private int sumMeal(final List<Expense> expenses) {
