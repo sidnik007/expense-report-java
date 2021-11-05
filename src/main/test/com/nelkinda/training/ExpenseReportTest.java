@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Date;
 import java.util.List;
 
 import static com.nelkinda.training.ExpenseType.*;
@@ -26,10 +27,11 @@ public class ExpenseReportTest {
         );
         PrintStream originalStdOut = System.out;
         ByteArrayOutputStream interceptedStdOutput = new ByteArrayOutputStream();
+        Date now = new Date();
         System.setOut(new PrintStream(interceptedStdOutput));
-        new ExpenseReport().printReport(expenses);
+        new ExpenseReport().printReport(expenses, now);
         final String actual = interceptedStdOutput.toString();
-        final String expected = "Expenses Fri Nov 05 12:31:21 IST 2021\n" +
+        final String expected = "Expenses " + now + "\n" +
                                 "Dinner\t1\t \n" +
                                 "Dinner\t5000\t \n" +
                                 "Dinner\t5001\tX\n" +
