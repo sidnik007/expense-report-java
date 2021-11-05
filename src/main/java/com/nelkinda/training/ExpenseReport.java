@@ -24,7 +24,7 @@ class Expense {
         this.amount = amount;
     }
 
-    String getExpenseName() {
+    String getName() {
         return type.name;
     }
 }
@@ -45,7 +45,7 @@ public class ExpenseReport {
                 mealExpenses += expense.amount;
             }
 
-            String expenseName = expense.getExpenseName();
+            String expenseName = expense.getName();
 
             String mealOverExpensesMarker = expense.type == ExpenseType.DINNER && expense.amount > 5000 || expense.type == ExpenseType.BREAKFAST && expense.amount > 1000 ? "X" : " ";
 
