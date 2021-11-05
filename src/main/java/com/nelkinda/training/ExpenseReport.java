@@ -4,14 +4,16 @@ import java.util.Date;
 import java.util.List;
 
 enum ExpenseType {
-    DINNER("Dinner"),
-    BREAKFAST("Breakfast"),
-    CAR_RENTAL("Car Rental")
+    DINNER("Dinner", true),
+    BREAKFAST("Breakfast", true),
+    CAR_RENTAL("Car Rental", false)
     ;
     final String name;
+    final Boolean isMeal;
 
-    ExpenseType(final String name) {
+    ExpenseType(final String name, final Boolean isMeal) {
         this.name = name;
+        this.isMeal = isMeal;
     }
 }
 
@@ -29,7 +31,7 @@ class Expense {
     }
 
     boolean isMeal() {
-        return type == ExpenseType.DINNER || type == ExpenseType.BREAKFAST;
+        return type.isMeal;
     }
 }
 
