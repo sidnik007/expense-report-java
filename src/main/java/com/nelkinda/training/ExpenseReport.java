@@ -56,13 +56,13 @@ public class ExpenseReport {
             if (expense.isMeal()) {
                 mealExpenses += expense.amount;
             }
-
+        }
+        for (Expense expense : expenses) {
             String expenseName = expense.getName();
-
             String mealOverExpensesMarker = expense.isOverMarker() ? "X" : " ";
-
             System.out.println(expenseName + "\t" + expense.amount + "\t" + mealOverExpensesMarker);
-
+        }
+        for (Expense expense : expenses) {
             total += expense.amount;
         }
 
