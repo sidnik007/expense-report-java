@@ -47,27 +47,37 @@ public class ExpenseReport {
     }
 
     void printReport(final List<Expense> expenses, final Date date) {
-        int total = 0;
-        int mealExpenses = 0;
 
         System.out.println("Expenses " + date);
 
-        for (Expense expense : expenses) {
-            if (expense.isMeal()) {
-                mealExpenses += expense.amount;
-            }
-        }
+        int mealExpenses = sumMeal(expenses);
         for (Expense expense : expenses) {
             String expenseName = expense.getName();
             String mealOverExpensesMarker = expense.isOverMarker() ? "X" : " ";
             System.out.println(expenseName + "\t" + expense.amount + "\t" + mealOverExpensesMarker);
         }
-        for (Expense expense : expenses) {
-            total += expense.amount;
-        }
+        int total = sumTotal(expenses);
 
         System.out.println("Meal expenses: " + mealExpenses);
         System.out.println("Total expenses: " + total);
+    }
+
+    private int sumMeal(final List<Expense> expenses) {
+        int mealExpenses = 0;
+        for (Expense expense : expenses) {
+            if (expense.isMeal()) {
+                mealExpenses += expense.amount;
+            }
+        }
+        return mealExpenses;
+    }
+
+    private int sumTotal(final List<Expense> expenses) {
+        int total = 0;
+        for (Expense expense : expenses) {
+            total += expense.amount;
+        }
+        return total;
     }
 
 }
