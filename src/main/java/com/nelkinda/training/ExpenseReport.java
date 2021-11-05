@@ -60,13 +60,11 @@ public class ExpenseReport {
     }
 
     private int sumMeal(final List<Expense> expenses) {
-        int mealExpenses = 0;
-        for (Expense expense : expenses) {
-            if (expense.isMeal()) {
-                mealExpenses += expense.amount;
-            }
-        }
-        return mealExpenses;
+        return expenses
+                .stream()
+                .filter(Expense::isMeal)
+                .mapToInt(e -> e.amount)
+                .sum();
     }
 
     private int sumTotal(final List<Expense> expenses) {
