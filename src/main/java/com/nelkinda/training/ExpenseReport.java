@@ -68,7 +68,7 @@ public class ExpenseReport {
         return sum(expenses, e -> true);
     }
 
-    private int sum(List<Expense> expenses, Predicate<Expense> predicate) {
+    private int sum(final List<Expense> expenses, final Predicate<Expense> predicate) {
         return expenses
                 .stream()
                 .filter(predicate)
