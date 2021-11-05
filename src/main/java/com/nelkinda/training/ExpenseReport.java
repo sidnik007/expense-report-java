@@ -51,9 +51,8 @@ public class ExpenseReport {
         System.out.println("Expenses " + date);
 
         for (Expense expense : expenses) {
-            String expenseName = expense.getName();
             String mealOverExpensesMarker = expense.isOverMarker() ? "X" : " ";
-            System.out.println(expenseName + "\t" + expense.amount + "\t" + mealOverExpensesMarker);
+            System.out.println(expense.getName() + "\t" + expense.amount + "\t" + mealOverExpensesMarker);
         }
 
         System.out.println("Meal expenses: " + sumMeal(expenses));
