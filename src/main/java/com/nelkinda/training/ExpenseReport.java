@@ -2,6 +2,7 @@ package com.nelkinda.training;
 
 import java.util.Date;
 import java.util.List;
+import java.util.function.Predicate;
 
 enum ExpenseType {
     DINNER("Dinner", true, 5000),
@@ -60,16 +61,17 @@ public class ExpenseReport {
     }
 
     private int sumMeal(final List<Expense> expenses) {
-        return expenses
-                .stream()
-                .filter(Expense::isMeal)
-                .mapToInt(e -> e.amount)
-                .sum();
+        return sum(expenses, Expense::isMeal);
     }
 
     private int sumTotal(final List<Expense> expenses) {
+        return sum(expenses, e -> true);
+    }
+
+    private int sum(List<Expense> expenses, Predicate<Expense> predicate) {
         return expenses
                 .stream()
+                .filter(predicate)
                 .mapToInt(e -> e.amount)
                 .sum();
     }
