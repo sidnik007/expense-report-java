@@ -68,11 +68,10 @@ public class ExpenseReport {
     }
 
     private int sumTotal(final List<Expense> expenses) {
-        int total = 0;
-        for (Expense expense : expenses) {
-            total += expense.amount;
-        }
-        return total;
+        return expenses
+                .stream()
+                .mapToInt(e -> e.amount)
+                .sum();
     }
 
 }
