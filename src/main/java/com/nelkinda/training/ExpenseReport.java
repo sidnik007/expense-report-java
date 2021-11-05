@@ -27,6 +27,10 @@ class Expense {
     String getName() {
         return type.name;
     }
+
+    boolean isMeal() {
+        return type == ExpenseType.DINNER || type == ExpenseType.BREAKFAST;
+    }
 }
 
 public class ExpenseReport {
@@ -41,7 +45,7 @@ public class ExpenseReport {
         System.out.println("Expenses " + date);
 
         for (Expense expense : expenses) {
-            if (isMeal(expense)) {
+            if (expense.isMeal()) {
                 mealExpenses += expense.amount;
             }
 
@@ -56,10 +60,6 @@ public class ExpenseReport {
 
         System.out.println("Meal expenses: " + mealExpenses);
         System.out.println("Total expenses: " + total);
-    }
-
-    private boolean isMeal(Expense expense) {
-        return expense.type == ExpenseType.DINNER || expense.type == ExpenseType.BREAKFAST;
     }
 
 }
