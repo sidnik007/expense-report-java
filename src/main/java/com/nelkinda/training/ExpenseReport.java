@@ -4,16 +4,18 @@ import java.util.Date;
 import java.util.List;
 
 enum ExpenseType {
-    DINNER("Dinner", true),
-    BREAKFAST("Breakfast", true),
-    CAR_RENTAL("Car Rental", false)
+    DINNER("Dinner", true, 5000),
+    BREAKFAST("Breakfast", true, 1000),
+    CAR_RENTAL("Car Rental", false, Integer.MAX_VALUE)
     ;
     final String name;
     final Boolean isMeal;
+    final int limit;
 
-    ExpenseType(final String name, final Boolean isMeal) {
+    ExpenseType(final String name, final Boolean isMeal, final int limit) {
         this.name = name;
         this.isMeal = isMeal;
+        this.limit = limit;
     }
 }
 
@@ -35,7 +37,7 @@ class Expense {
     }
 
     boolean isOverMarker() {
-        return type == ExpenseType.DINNER && amount > 5000 || type == ExpenseType.BREAKFAST && amount > 1000;
+        return amount > type.limit;
     }
 }
 
