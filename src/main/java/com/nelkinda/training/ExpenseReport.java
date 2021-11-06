@@ -1,5 +1,7 @@
 package com.nelkinda.training;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Predicate;
@@ -10,10 +12,10 @@ enum ExpenseType {
     CAR_RENTAL("Car Rental", false, Integer.MAX_VALUE)
     ;
     final String name;
-    final Boolean isMeal;
+    final boolean isMeal;
     final int limit;
 
-    ExpenseType(final String name, final Boolean isMeal, final int limit) {
+    ExpenseType(final String name, final boolean isMeal, final int limit) {
         this.name = name;
         this.isMeal = isMeal;
         this.limit = limit;
@@ -49,15 +51,25 @@ public class ExpenseReport {
 
     void printReport(final List<Expense> expenses, final Date date) {
 
-        System.out.println("Expenses " + date);
+        String report = generateReport(expenses, date);
+        System.out.print(report);
+    }
+
+    private String generateReport(List<Expense> expenses, Date date) {
+        ByteArrayOutputStream interceptedOut = new ByteArrayOutputStream();
+        PrintStream out = new PrintStream(interceptedOut);
+
+        out.println("Expenses " + date);
 
         for (Expense expense : expenses) {
             String mealOverExpensesMarker = expense.isOverMarker() ? "X" : " ";
-            System.out.println(expense.getName() + "\t" + expense.amount + "\t" + mealOverExpensesMarker);
+            out.println(expense.getName() + "\t" + expense.amount + "\t" + mealOverExpensesMarker);
         }
 
-        System.out.println("Meal expenses: " + sumMeal(expenses));
-        System.out.println("Total expenses: " + sumTotal(expenses));
+        out.println("Meal expenses: " + sumMeal(expenses));
+        out.println("Total expenses: " + sumTotal(expenses));
+        String report = interceptedOut.toString();
+        return report;
     }
 
     private int sumMeal(final List<Expense> expenses) {
