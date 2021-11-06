@@ -2,9 +2,12 @@ package com.nelkinda.training;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 enum ExpenseType {
     DINNER("Dinner", true, 5000),
@@ -56,20 +59,25 @@ public class ExpenseReport {
     }
 
     private String generateReport(List<Expense> expenses, Date date) {
-        ByteArrayOutputStream interceptedOut = new ByteArrayOutputStream();
-        PrintStream out = new PrintStream(interceptedOut);
+        return header(date) + body(expenses) + summary(expenses);
+    }
 
-        out.println("Expenses " + date);
+    private String header(Date date) {
+        return "Expenses " + date + "\n";
+    }
 
-        for (Expense expense : expenses) {
-            String mealOverExpensesMarker = expense.isOverMarker() ? "X" : " ";
-            out.println(expense.getName() + "\t" + expense.amount + "\t" + mealOverExpensesMarker);
-        }
+    private String body(List<Expense> expenses) {
+        return expenses.stream().map(this::detail).collect(Collectors.joining());
+    }
 
-        out.println("Meal expenses: " + sumMeal(expenses));
-        out.println("Total expenses: " + sumTotal(expenses));
-        String report = interceptedOut.toString();
-        return report;
+    private String detail(Expense expense) {
+        String mealOverExpensesMarker = expense.isOverMarker() ? "X" : " ";
+        return expense.getName() + "\t" + expense.amount + "\t" + mealOverExpensesMarker + "\n";
+    }
+
+    private String summary(List<Expense> expenses) {
+        return "Meal expenses: " + sumMeal(expenses) + "\n"
+               + "Total expenses: " + sumTotal(expenses) + "\n";
     }
 
     private int sumMeal(final List<Expense> expenses) {
